@@ -13,6 +13,7 @@ class REIVAuctionItem(Item):
     prop_bedr = Field()
     prop_price = Field()
     prop_type = Field()
+    prop_url = Field()
     auc_method = Field()
     auc_saledate = Field()
     auc_agent = Field()

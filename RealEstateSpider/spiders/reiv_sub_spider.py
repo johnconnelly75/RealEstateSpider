@@ -35,8 +35,21 @@ class ReivSubSpider(BaseSpider):
               item['src_domains'] = self.allowed_domains
               item['src_url'] = response.url
 
+              # Check if xpath (/table/tbody/tr[N]/td[N]/a) has
+              # a href item if so, take both URL and street address
+              pre_item_prop_addr_href = auction_res.select('td[1]/a/@href').extract()
+              if len(pre_item_prop_addr_href) > 0:
+                pre_item_prop_addr_href = pre_item_prop_addr_href[0].lstrip().rstrip()
+                pre_item_prop_addr = auction_res.select('td[1]/a/text()').extract()[0].lstrip().rstrip()
+              else:
+                pre_item_prop_addr_href = ''
+                pre_item_prop_addr = auction_res.select('td[1]/text()').extract()[0].lstrip().rstrip()
+
+              item['prop_url'] = pre_item_prop_addr_href
+
+              # Derive property address
               # RegEx to replace HexA0 and contigious whitespaces as a space
-              item['prop_address'] = auction_res.select('td[1]/text()').extract()[0].lstrip().rstrip()
+              item['prop_address'] = pre_item_prop_addr
               re_address_del1 = re.compile('\\xa0|\s\s+')
               item['prop_address'] = re_address_del1.sub(' ', item['prop_address'])
               re_address_del2 = re.compile('/\s+([0-9])')

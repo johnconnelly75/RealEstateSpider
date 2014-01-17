@@ -1,15 +1,28 @@
 -- Backup into another table:
-INSERT INTO auction_results_20131027(prop_street_address,
+INSERT INTO auction_results(prop_street_address,
                                      prop_suburb,
                                      prop_num_bedrooms,
                                      prop_sale_price,
                                      prop_type,
+                                     prop_url,
                                      auc_method,
                                      auc_saledate,
                                      auc_agent,
                                      data_source,
                                      data_ins_TS)
-   SELECT prop_street_address,
+   SELECT distinct prop_street_address,
+          prop_suburb,
+          prop_num_bedrooms,
+          prop_sale_price,
+          prop_type,
+          '',
+          auc_method,
+          auc_saledate,
+          auc_agent,
+          data_source,
+          max(data_ins_TS)
+     FROM auction_results_20140118
+     group by prop_street_address,
           prop_suburb,
           prop_num_bedrooms,
           prop_sale_price,
@@ -17,10 +30,7 @@ INSERT INTO auction_results_20131027(prop_street_address,
           auc_method,
           auc_saledate,
           auc_agent,
-          data_source,
-          data_ins_TS
-     FROM auction_results;
-
+          data_source;
 
 COMMIT;
 

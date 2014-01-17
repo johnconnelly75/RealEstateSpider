@@ -1,4 +1,24 @@
+-- v1.3
+-- Removed data_ins_TS as PK due to need to make multiple inserts unique
+-- Made prop_url limited 255 due to 767byte limit for MySQL keys
+CREATE TABLE `auction_results` (
+        `prop_street_address` VARCHAR( 255 ) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+        `prop_suburb` VARCHAR( 100 ) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+        `prop_num_bedrooms` TINYINT( 5 ) NULL,
+        `prop_sale_price` DOUBLE( 22, 0 ) NULL,
+        `prop_type` VARCHAR( 50 ) CHARACTER SET utf8 COLLATE utf8_general_ci NULL,
+        `prop_url` VARCHAR( 255 ) CHARACTER SET utf8 COLLATE utf8_general_ci NULL,
+        `auc_method` VARCHAR( 50 ) CHARACTER SET utf8 COLLATE utf8_general_ci NULL,
+        `auc_saledate` VARCHAR( 30 ) CHARACTER SET utf8 COLLATE utf8_general_ci NULL,
+        `auc_agent` VARCHAR( 255 ) CHARACTER SET utf8 COLLATE utf8_general_ci NULL,
+        `data_source` VARCHAR( 255 ) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+        `data_ins_TS` TIMESTAMP NOT NULL ON UPDATE CURRENT_TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+         PRIMARY KEY ( `prop_url`,`prop_suburb`,`prop_street_address`,`prop_type`,`prop_sale_price`,`auc_method`,`auc_saledate`,`data_source` )
+ )
+CHARACTER SET = utf8
+
 -- v1.2
+/*
 CREATE TABLE `auction_results` (
         `prop_street_address` VARCHAR( 255 ) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
         `prop_suburb` VARCHAR( 100 ) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
@@ -13,6 +33,7 @@ CREATE TABLE `auction_results` (
          PRIMARY KEY ( `prop_suburb`,`prop_street_address`,`prop_type`,`prop_sale_price`,`auc_saledate`,`data_ins_TS`,`data_source` )
  )
 CHARACTER SET = utf8
+*/
 
 -- v1.0
 CREATE TABLE `suburbs` ( 

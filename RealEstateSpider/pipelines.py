@@ -14,13 +14,14 @@ class ReivPipeline(object):
 
     def process_item(self, item, spider):
         try:
-            self.cursor.execute("""INSERT INTO auction_results (prop_street_address, prop_num_bedrooms, prop_sale_price, prop_type, prop_suburb, auc_method, auc_saledate, auc_agent, data_source, data_ins_TS) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)""",
+            self.cursor.execute("""INSERT INTO auction_results (prop_street_address, prop_num_bedrooms, prop_sale_price, prop_type, prop_suburb, prop_url, auc_method, auc_saledate, auc_agent, data_source, data_ins_TS) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)""",
                            [
                             item['prop_address'].encode('utf-8'),
                             item['prop_bedr'].encode('utf-8'),
                             item['prop_price'].encode('utf-8'),
                             item['prop_type'].encode('utf-8'),
                             item['prop_suburb'].encode('utf-8'),
+                            item['prop_url'].encode('utf-8'),
                             item['auc_method'].encode('utf-8'),
                             item['auc_saledate'],
                             item['auc_agent'].encode('utf-8'),
